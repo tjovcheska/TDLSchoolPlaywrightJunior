@@ -13,6 +13,10 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+  timeout: 60000, // global timeout for each test
+    expect: {
+    timeout: 10000,   // equivalent to defaultCommandTimeout
+  },
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -26,27 +30,27 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: 'https://www.saucedemo.com/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    viewport: { width: 900, height: 1440 },
+    screenshot: 'only-on-failure', // capture screenshots on failure
+    video: 'on',                  // record video for tests
+    ignoreHTTPSErrors: true,      // similar to chromeWebSecurity: false
+    actionTimeout: 10000,         // maximum time for actions like click/fill
+    navigationTimeout: 60000,     // equivalent to pageLoadTimeout
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: 'Desktop Chrome',
       use: { ...devices['Desktop Chrome'] },
     },
-
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'iPhone 6',
+      use: { ...devices['iPhone 6'] },
     },
 
     /* Test against mobile viewports. */
