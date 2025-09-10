@@ -40,6 +40,19 @@ test.describe('Inventory page', () => {
     // );
   });
 
+  test('should sort inventory items by price from low to high', async ({ page }) => {
+    await inventoryPage.sortItemsBy(inventory.sortingOptions.LowToHigh);
+
+    // // Assert that prices are sorted
+    // const priceLocators = await inventoryPage.inventoryItemPrice.allTextContents();
+    // const prices = priceLocators.map(text => parseFloat(text.replace('$', '').trim()));
+    // const sortedPrices = [...prices].sort((a, b) => a - b);
+
+    // expect(prices).toEqual(sortedPrices);
+
+    await inventoryPage.assertSortedPrices();
+  });
+
   test('should increase the number of items in the cart after clicking add to cart button', async ({ page }) => {
     await inventoryPage.addBikeLightsToCart();
     await expect(inventoryPage.shoppingCartBadge).toHaveText('1');

@@ -6,13 +6,13 @@ export class InventoryPage {
     private readonly inventoryItems = page.getByTestId('inventory-item'),
     private readonly itemsSortingDropdown = page.getByTestId('product-sort-container'),
     readonly inventoryItemName = page.getByTestId('inventory-item-name'),
-    private readonly bikeLightsItem = page.getByTestId('add-to-cart-sauce-labs-bike-light'),
-    private readonly onesieItem = page.getByTestId('add-to-cart-sauce-labs-onesie'),
+    readonly bikeLightsItem = page.getByTestId('add-to-cart-sauce-labs-bike-light'),
+    readonly onesieItem = page.getByTestId('add-to-cart-sauce-labs-onesie'),
     readonly shoppingCartBadge = page.getByTestId('shopping-cart-badge'),
     private readonly removeBikeLightButton = page.getByTestId('remove-sauce-labs-bike-light'),
-    private readonly inventoryItemPrice = page.getByTestId('inventory-item-price'),
-    private readonly shoppingCartLink = page.getByTestId('shopping-cart-link'),
-    private readonly checkoutButton = page.getByTestId('checkout')
+    readonly inventoryItemPrice = page.getByTestId('inventory-item-price'),
+    readonly shoppingCartLink = page.getByTestId('shopping-cart-link'),
+    readonly checkoutButton = page.getByTestId('checkout')
   ) {
   }
 
