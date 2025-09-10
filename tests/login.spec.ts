@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import users from '../fixtures/users.json';
 
 test.describe('Login functionality', () => {
 
@@ -15,32 +16,32 @@ test.describe('Login functionality', () => {
     });
 
     test('should login with valid credentials as standard_user', async ({ page }) => {
-      await page.locator('[data-test="username"]').fill('standard_user');
-      await page.locator('[data-test="password"]').fill('secret_sauce');
+      await page.locator('[data-test="username"]').fill(users.standard_user.username);
+      await page.locator('[data-test="password"]').fill(users.standard_user.password);
       await page.locator('[data-test="login-button"]').click();
 
       await expect(page).toHaveURL(/.*inventory.html/);
     });
 
     test('should login with valid credentials as problem_user', async ({ page }) => {
-      await page.locator('[data-test="username"]').fill('problem_user');
-      await page.locator('[data-test="password"]').fill('secret_sauce');
+      await page.locator('[data-test="username"]').fill(users.problem_user.username);
+      await page.locator('[data-test="password"]').fill(users.problem_user.password);
       await page.locator('[data-test="login-button"]').click();
 
       await expect(page).toHaveURL(/.*inventory.html/);
     });
 
     test('should login with valid credentials as visual_user', async ({ page }) => {
-      await page.locator('[data-test="username"]').fill('visual_user');
-      await page.locator('[data-test="password"]').fill('secret_sauce');
+      await page.locator('[data-test="username"]').fill(users.visual_user.username);
+      await page.locator('[data-test="password"]').fill(users.visual_user.password);
       await page.locator('[data-test="login-button"]').click();
 
       await expect(page).toHaveURL(/.*inventory.html/);
     });
 
     test.skip('should logout after login', async ({ page }) => {
-      await page.locator('[data-test="username"]').fill('standard_user');
-      await page.locator('[data-test="password"]').fill('secret_sauce');
+      await page.locator('[data-test="username"]').fill(users.standard_user.username);
+      await page.locator('[data-test="password"]').fill(users.standard_user.password);
       await page.locator('[data-test="login-button"]').click();
 
       await expect(page).toHaveURL(/.*inventory.html/);
@@ -65,12 +66,13 @@ test.describe('Login functionality', () => {
     });
 
     test('should prevent login with locked out user', async ({ page }) => {
-      await page.locator('[data-test="username"]').fill('locked_out_user');
-      await page.locator('[data-test="password"]').fill('secret_sauce');
+      await page.locator('[data-test="username"]').fill(users.locked_out_user.username);
+      await page.locator('[data-test="password"]').fill(users.locked_out_user.password);
       await page.locator('[data-test="login-button"]').click();
 
-      await expect(page.locator('[data-test="error"]')).toBeVisible();
-      await expect(page.locator('[data-test="error"]')).toHaveText(
+      const error = page.locator('[data-test="error"]');
+      await expect(error).toBeVisible();
+      await expect(error).toHaveText(
         'Epic sadface: Sorry, this user has been locked out.'
       );
       await expect(page).toHaveURL('https://www.saucedemo.com/');
