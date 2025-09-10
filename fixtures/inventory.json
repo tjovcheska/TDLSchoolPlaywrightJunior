@@ -1,0 +1,9 @@
+{
+    "totalNumberOfItems": 6,
+    "sortingOptions": {
+        "ZtoA": "za",
+        "AtoZ": "az",
+        "LowToHigh": "lohi",
+        "HighToLow": "hilo"
+    }
+}

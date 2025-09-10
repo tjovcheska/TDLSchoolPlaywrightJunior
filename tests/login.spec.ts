@@ -1,10 +1,20 @@
 import { test, expect } from '@playwright/test';
 import users from '../fixtures/users.json';
+import { LoginPage } from '../pageObjects/LoginPage';
+import { InventoryPage } from '../pageObjects/InventoryPage';
+import { Navigation } from '../pageObjects/Navigation';
+import { initializePageObjects } from '../helpers/pageObjectInitializer';
+
+let loginPage: LoginPage;
+let inventoryPage: InventoryPage;
+let navigation: Navigation;
 
 test.describe('Login functionality', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    ({ loginPage, inventoryPage, navigation } = initializePageObjects(page))
+    await navigation.goToLoginPage();
+    // await page.goto('/');
   });
 
   test.describe('Positive test cases', () => {
@@ -16,17 +26,22 @@ test.describe('Login functionality', () => {
     });
 
     test('should login with valid credentials as standard_user', async ({ page }) => {
-      await page.locator('[data-test="username"]').fill(users.standard_user.username);
-      await page.locator('[data-test="password"]').fill(users.standard_user.password);
-      await page.locator('[data-test="login-button"]').click();
+      await loginPage.fillUsername(users.standard_user.username);
+      await loginPage.fillPassword(users.standard_user.password);
+      await loginPage.clickLoginButton();
+      // await page.locator('[data-test="username"]').fill(users.standard_user.username);
+      // await page.locator('[data-test="password"]').fill(users.standard_user.password);
+      // await page.locator('[data-test="login-button"]').click();
 
-      await expect(page).toHaveURL(/.*inventory.html/);
+      await navigation.verifyUrlContains('/inventory.html')
+      // await expect(page).toHaveURL(/.*inventory.html/);
     });
 
     test('should login with valid credentials as problem_user', async ({ page }) => {
-      await page.locator('[data-test="username"]').fill(users.problem_user.username);
-      await page.locator('[data-test="password"]').fill(users.problem_user.password);
-      await page.locator('[data-test="login-button"]').click();
+      await loginPage.loginWithValidCredentials(users.problem_user);
+      // await page.locator('[data-test="username"]').fill(users.problem_user.username);
+      // await page.locator('[data-test="password"]').fill(users.problem_user.password);
+      // await page.locator('[data-test="login-button"]').click();
 
       await expect(page).toHaveURL(/.*inventory.html/);
     });

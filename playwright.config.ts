@@ -39,7 +39,8 @@ export default defineConfig({
     video: 'on',                  // record video for tests
     ignoreHTTPSErrors: true,      // similar to chromeWebSecurity: false
     actionTimeout: 10000,         // maximum time for actions like click/fill
-    navigationTimeout: 60000,     // equivalent to pageLoadTimeout
+    navigationTimeout: 60000, 
+    testIdAttribute: "data-test"
   },
 
   /* Configure projects for major browsers */
