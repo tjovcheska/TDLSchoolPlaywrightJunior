@@ -2,7 +2,11 @@
   "name": "untitled-folder",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "clean:reports": "rm -rf playwright-report",
+    "test": "npm run clean:reports && npx playwright test",
+    "test:ci": "npm run clean:reports && npx playwright test --reporter=html"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
